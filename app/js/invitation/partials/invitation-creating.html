@@ -1,0 +1,23 @@
+<form>
+    <h1>Create an invitation</h1>
+    <textarea placeholder="Example: Let's go out for dinner at the new Thai place!"
+              class="required" ng-model="invitation.title"></textarea>
+
+    <h2>Choices:</h2>
+    <ol class="choice-list">
+			<li ng-repeat="choice in invitation.choices">
+				<button type="button" ng-click="removeInput($index)">Remove</button>
+				<div>
+					<input ng-model="choice.displayText" 
+					   	   placeholder="{{choice.displayTextPlaceHolder}}" 
+					   	   class="required" 
+					       maxlength="15" />
+				 </div>
+			</li>
+    </ol>
+
+    <p ng-hide="invitation.choices.length"><em>Add some choices!</em></p>
+
+    <button class="big dim" ng-click="addChoice()">+ add choice</button>
+    <button class="big bright" ng-click="save()">OK, all done!</button>
+</form>	

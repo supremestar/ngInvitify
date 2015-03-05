@@ -1,0 +1,15 @@
+<div ng-if="!invitation">
+    <em>Loading...</em>
+</div>
+
+<div ng-hide="!invitation">
+	<div ng-if='!rsvpSubmitted' ng-include="'./js/rsvp/partials/rsvp-creating.html'">
+	</div>
+	
+	<div ng-show='rsvpSubmitted'>
+		<p data-bind="visible: hasSubmitted"><em>Thanks for replying!</em></p>
+	</div>
+
+	<div ng-include="'./js/rsvp/partials/rsvp-results.html'">
+	</div>
+</div>

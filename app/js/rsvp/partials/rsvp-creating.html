@@ -1,0 +1,24 @@
+<p>You've been invited to:</p>
+<h1>{{invitation.title}}</h1>
+<form class="response" data-ng-init="findOne()">
+    <h1>Your reply</h1>
+    <div class="from">
+        <label>From:</label>
+        <span><input data-ng-model="invitation.votes.respondeeName"
+                     placeholder="Your name" class="required" minlength="3" maxlength="20" /></span>
+    </div>
+    
+    <p>Thanks for the invitation! I'm happy with the following choices:</p>
+    
+    <div class="choices" data-ng-repeat="choice in invitation.choices">
+        <p>
+            <label>
+                <input type="checkbox" ng-model="choice.Selected" />
+                <span data-ng-model="choice.displayText">{{choice.displayText}}</span>
+            </label>
+        </p>
+    </div>
+    <p>
+        <button class="big bright" type="submit" ng-click="submitRsvp()">Send reply</button>
+    </p>
+</form>

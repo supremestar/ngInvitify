@@ -9,6 +9,7 @@ var minifyCSS = require('gulp-minify-css');
 var del = require('del');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
+var nodemon = require('gulp-nodemon')
 
 // tasks
 gulp.task('lint', function() {
@@ -49,6 +50,18 @@ gulp.task('copy-html-files', function () {
     .pipe(gulp.dest('dist/'));
 });
 
+gulp.task('copy-api-files', function () {
+  gulp.src('./api')
+    .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copy-serverjs', function () {
+  gulp.src('server.js')
+    .pipe(gulp.dest('dist/'));
+});
+
+/*
+
 gulp.task('connect', function () {
   connect.server({
     root: 'app/',
@@ -56,12 +69,23 @@ gulp.task('connect', function () {
   }); 
 });
 
+
 gulp.task('connectDist', function () {
   connect.server({
     root: 'dist/',
     port: 9999
   });
 });
+
+*/
+
+gulp.task('connect', function () {
+  nodemon({
+    script: 'server.js',
+    ext: 'js'
+  }); 
+});
+
 
 gulp.task('browserify', function() {
   gulp.src(['app/js/main.js'])
@@ -85,10 +109,10 @@ gulp.task('browserifyDist', function() {
 
 // default task
 gulp.task('default',
-  ['lint', 'browserify', 'connect']
+  ['clean', 'lint', 'browserify', 'connect']
 );
 
 // build task
 gulp.task('build',
-  ['lint', 'minify-css', 'minify-js', 'browserifyDist', 'copy-html-files', 'copy-bower-components', 'connectDist']
+  ['lint', 'clean', 'minify-css', 'minify-js', 'browserifyDist', 'copy-html-files', 'copy-api-files', 'copy-serverjs', 'copy-bower-components']
 );

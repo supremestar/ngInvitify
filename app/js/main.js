@@ -1,36 +1,44 @@
 (function () {
 
-'use strict';
+    'use strict';
 
-   require('angular');
-   require('angular-route');
-   require('angular-animate');
-   var mainCtrl = require('./controllers/mainctrl');
-   
+    require('angular');
+    require('angular-route');
+    require('angular-animate');
 
-  angular.module('SampleApp', ['ngRoute', 'ngAnimate'])
+    var invitationCtrl = require('./invitation/controllers/invitationctrl');
+    var invitationSvc = require('./invitation/services/invitationsvc');
+    var rsvpCtrl = require('./rsvp/controllers/rsvpctrl');
 
-  .config([
-    '$locationProvider',
-    '$routeProvider',
-    function($locationProvider, $routeProvider) {
-      $locationProvider.hashPrefix('!');
-      // routes
-      $routeProvider
-        .when("/", {
-          templateUrl: "./partials/partial1.html",
-          controller: "MainController"
-        })
-        .otherwise({
-           redirectTo: '/'
-        });
-    }
-  ]);
+    angular.module('InvitifyApp', ['ngRoute', 'ngAnimate'])
+        .config([
+      '$locationProvider',
+      '$routeProvider',
+      function ($locationProvider, $routeProvider) {
+                $locationProvider.hashPrefix('!');
+                // routes
+                $routeProvider
+                    .when('/', {
+                        templateUrl: './js/invitation/invitation.html',
+                        controller: 'InvitationController'
+                    })
+                    .when('/rsvp/:id', {
+                        templateUrl: './js/rsvp/rsvp.html',
+                        controller: 'RSVPController'
+                    })
+                    .otherwise({
+                        redirectTo: '/'
+                    });
+      }
+    ]);
 
-  //Load controller
-  angular.module('SampleApp')
+    //Load controller
+    angular.module('InvitifyApp')
+        .controller('InvitationController', ['$scope', '$routeParams', '$location', 'InvitationSvc', invitationCtrl])
+        .service('InvitationSvc', invitationSvc);
 
-  .controller('MainController', ['$scope', mainCtrl]);
- 
+    angular.module('InvitifyApp')
+        .controller('RSVPController', ['$scope', '$routeParams', 'InvitationSvc', rsvpCtrl])
+        .service('InvitationSvc', invitationSvc);
 
 }());

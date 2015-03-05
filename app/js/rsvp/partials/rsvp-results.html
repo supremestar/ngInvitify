@@ -1,0 +1,26 @@
+<h1 class="results-title">Results</h1>
+
+<p>Votes so far: <b>{{invitation.votes.length}}</b></p>
+
+<div class="results" data-ng-model="invitation.votes.length">
+    <table>
+        <thead><tr>
+            <th>Name</th>
+            <th data-ng-repeat="choice in invitation.choices">
+				<div>{{choice.displayText}}</div>
+			</th>
+        </tr></thead>
+        <tbody data-ng-repeat="vote in votesTableData">
+            <tr>
+                <td><div>{{vote.name}}</div></td>
+					<!-- <td data-ng-repeat="ch in vote">
+							<span ng-show='ch.isChosen'>✓</span>
+                 		</div>
+					</td> 
+				</td> -->
+						
+				<td data-ng-repeat='ch in vote.choice' ng-class="{chosen: ch.isChosen}"><div ng-show='ch.isChosen'>✓</div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
